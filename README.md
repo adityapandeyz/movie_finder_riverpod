@@ -70,74 +70,17 @@ lib/
 
 This app uses Riverpod for state management. Providers are defined and annotated using `riverpod_annotation`, and the code is generated with `riverpod_generator` and `build_runner`.
 
-### Example Providers
+- Immutability: Riverpod encourages immutable state, which can lead to more predictable and manageable code.
 
-#### Movie Provider
+- Safety: It avoids many common mistakes that can occur with other state management solutions, like incorrect usage of BuildContext or unintentional re-renders.
 
-```dart
-// providers/movie_provider.dart
+- Flexibility: It can handle both simple and complex state management needs, making it suitable for various application sizes.
 
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:riverpod_annotation/riverpod_annotation.dart';
-import '../repository/movie_repository.dart';
-import '../models/movie.dart';
+- Provider-independent: Unlike the Provider package, Riverpod does not rely on Flutter's InheritedWidget, which can make it more robust and easier to use in different scenarios.
 
-part 'movie_provider.g.dart';
+- Compile-time safety: Riverpod offers compile-time safety checks, reducing runtime errors and improving code quality.
 
-@riverpod
-Future<List<Movie>> movieProvider(MovieRef ref) async {
-  final repository = ref.read(movieRepositoryProvider);
-  return repository.getMovies();
-}
-```
-
-#### Watchlist Provider
-
-```dart
-// providers/watchlist_provider.dart
-
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:riverpod_annotation/riverpod_annotation.dart';
-import '../models/movie.dart';
-
-part 'watchlist_provider.g.dart';
-
-@riverpod
-class Watchlist extends _$Watchlist {
-  @override
-  List<Movie> build() => [];
-
-  void addMovie(Movie movie) {
-    state = [...state, movie];
-  }
-
-  void removeMovie(Movie movie) {
-    state = state.where((m) => m.id != movie.id).toList();
-  }
-}
-```
-
-### Generated Provider
-
-```dart
-// providers/movie_provider.g.dart
-
-// GENERATED CODE - DO NOT MODIFY BY HAND
-
-part of 'movie_provider.dart';
-
-@ProviderFor(movieProvider)
-final movieProviderProvider = AutoDisposeFutureProvider<List<Movie>>.internal(
-  movieProvider,
-  name: 'movieProviderProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$movieProviderHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
-
-typedef MovieProviderRef = AutoDisposeFutureProviderRef<List<Movie>>;
-```
+- Testing: Riverpod makes testing state management easier because it allows for greater separation of concerns and easier dependency injection.
 
 ## License
 
