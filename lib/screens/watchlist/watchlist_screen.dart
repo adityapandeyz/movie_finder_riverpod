@@ -16,10 +16,11 @@ class _WatchListScreenState extends ConsumerState<WatchListScreen> {
   @override
   Widget build(BuildContext context) {
     final watchlist = ref.watch(watchListNotifierProvider);
+    final total = ref.watch(watchlistTotalProvider);
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Your Watchlist'),
+        title: Text('Your Watchlist ($total)'),
         centerTitle: true,
         // actions: [],
       ),

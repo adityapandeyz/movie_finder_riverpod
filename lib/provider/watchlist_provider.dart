@@ -1,20 +1,14 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../models/movie.dart';
 
-class WatchListNotifier extends Notifier<Set<Movie>> {
+part 'watchlist_provider.g.dart';
+
+@riverpod
+class WatchListNotifier extends _$WatchListNotifier {
   // initial value
   @override
   Set<Movie> build() {
-    return {
-      const Movie(
-        id: 1,
-        title: 'HxH: Last Mission',
-        rating: 6,
-        image:
-            'https://upload.wikimedia.org/wikipedia/en/b/b3/Hunter_x_Hunter_The_Last_Mission_poster.png',
-      ),
-    };
+    return {};
   }
 
   // method to update state
@@ -32,7 +26,19 @@ class WatchListNotifier extends Notifier<Set<Movie>> {
   }
 }
 
-final watchListNotifierProvider =
-    NotifierProvider<WatchListNotifier, Set<Movie>>(() {
-  return WatchListNotifier();
-});
+// final watchListNotifierProvider =
+//     NotifierProvider<WatchListNotifier, Set<Movie>>(() {
+//   return WatchListNotifier();
+// });
+
+// dependent provider
+@riverpod
+int watchlistTotal(ref) {
+  final watchlist = ref.watch(watchListNotifierProvider);
+  int total = 0;
+  for (Movie movie in watchlist) {
+    total += 1;
+  }
+
+  return total;
+}
